@@ -1,14 +1,29 @@
 import './App.css'
-import {useState} from "react";
+import {type ChangeEvent, type FormEvent, useState} from "react";
 
 function App() {
     const [name, setName] = useState<string>("to jest default")
-    const [boat, setBoat] = useState()
-    const [hour, setHour] = useState()
+    const [boat, setBoat] = useState<string>()
+    const [hour, setHour] = useState<number>(5)
+    const [kapok, setKapok] = useState<boolean>(false)
+    const [instructor, setInstructor] = useState<boolean>(false)
+    const [payment, setPayment] = useState<string>()
 
     function handleNameChange(e: React.ChangeEvent<HTMLInputElement>){
         setName(e.target.value);
-        console.log(name);
+        console.log(e.target.value);
+    }
+
+    function handleBoatChange(e: React.ChangeEvent<HTMLSelectElement>){
+        setBoat(e.target.value);
+        console.log(e.target.value)
+    }
+
+    function handleHourChange(e: React.ChangeEvent<HTMLInputElement>){
+        setHour(e.target.valueAsNumber);
+        console.log(e.target.value);
+
+        return e.currentTarget.value;
     }
 
   return (
@@ -18,13 +33,14 @@ function App() {
             <p>Podaj Imię:</p>
             <input type={'text'} name={'clientName'} onChange={handleNameChange}/>
             <p>Wybierz swoją łódź:</p>
-            <select name={'boat'}>
+            <select name={'boat'} onChange={handleBoatChange}>
                 <option>Kajak (20zł/h)</option>
                 <option>Rower wodny (35zł/h)</option>
                 <option>OMEGA (150zł/h)</option>
             </select>
             <p>Wybierz godziny wynajmu:</p>
-            <input type={'range'} max={8} min={1} name={'leaseTime'}/>
+            <p>{hour} godzin</p>
+            <input type={'range'} max={8} min={1} defaultValue={hour} name={'leaseTime'} onChange={handleHourChange}/>
             <p/>
             <input type={'checkbox'} name={'kapokCheck'}/> Kapok dla dziecka (5zł jednorazowo)
             <input type={'checkbox'} name={'inCheck'}/> opieka instuktora (50zł za godzinę)
