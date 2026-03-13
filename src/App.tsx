@@ -1,13 +1,21 @@
-
 import './App.css'
+import {useState} from "react";
 
 function App() {
+    const [name, setName] = useState<string>("to jest default")
+    const [boat, setBoat] = useState()
+    const [hour, setHour] = useState()
+
+    function handleNameChange(e: React.ChangeEvent<HTMLInputElement>){
+        setName(e.target.value);
+        console.log(name);
+    }
 
   return (
     <>
         <div>
             <p>Podaj Imię:</p>
-            <input type={'text'} name={'clientName'}/>
+            <input type={'text'} name={'clientName'} onChange={handleNameChange}/>
             <p>Wybierz swoją łódź:</p>
             <select name={'boat'}>
                 <option>Kajak (20zł/h)</option>
