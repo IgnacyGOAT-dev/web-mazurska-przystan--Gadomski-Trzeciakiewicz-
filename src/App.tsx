@@ -6,6 +6,7 @@ function App() {
   return (
     <>
         <div>
+            <form>
             <p>Podaj Imię:</p>
             <input type={'text'} name={'clientName'}/>
             <p>Wybierz swoją łódź:</p>
@@ -16,18 +17,18 @@ function App() {
             </select>
             <p>Wybierz godziny wynajmu:</p>
             <input type={'range'} max={8} min={1} name={'leaseTime'}/>
-        </div>
-
-        <div>
+            <p/>
             <input type={'checkbox'} name={'kapokCheck'}/> Kapok dla dziecka (5zł jednorazowo)
             <input type={'checkbox'} name={'inCheck'}/> opieka instuktora (50zł za godzinę)
             <br/>
             Wybierz płatność:
-            <input type={'radio'} name={'payment'}/> Karta
-            <input type={'radio'} name={'payment'}/> Blik
+            <input type={'radio'} name={'payment'} value={'card'}/> Karta
+            <input type={'radio'} name={'payment'} value={'blik'}/> Blik
             <p/>
-            <button type='submit' name={'submit'}/>
+            <button type='submit' name={'submit'}>Sprzedaj nam swe życie</button>
+            </form>
         </div>
+
     </>
   )
 }
