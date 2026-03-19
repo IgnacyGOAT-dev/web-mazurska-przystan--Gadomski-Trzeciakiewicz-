@@ -26,6 +26,20 @@ function App() {
         return e.currentTarget.value;
     }
 
+    function handleKapokChange(e: React.ChangeEvent<HTMLInputElement>) {
+        setKapok(e.target.checked);
+    }
+
+    function handleInstructorChange(e: React.ChangeEvent<HTMLInputElement>) {
+        setInstructor(e.target.checked);
+    }
+
+    function handlePaymentChange(e: React.ChangeEvent<HTMLInputElement>) {
+        setPayment(e.target.value);
+    }
+
+
+
   return (
     <>
         <div>
