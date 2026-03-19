@@ -2,8 +2,8 @@ import './App.css'
 import {type ChangeEvent, type FormEvent, useState} from "react";
 
 function App() {
-    const [name, setName] = useState<string>("to jest default")
-    const [boat, setBoat] = useState<string>()
+    const [name, setName] = useState<string>()
+    const [boat, setBoat] = useState<string>("Kajak (20zł/h)")
     const [hour, setHour] = useState<number>(5)
     const [kapok, setKapok] = useState<boolean>(false)
     const [instructor, setInstructor] = useState<boolean>(false)
@@ -56,7 +56,7 @@ function App() {
     function handleSubmit(e: FormEvent<HTMLFormElement>) {
         e.preventDefault();
 
-        if (!name.trim()) {
+        if (!name?.trim()) {
             alert("Podaj imię");
             return;
         }
@@ -75,6 +75,10 @@ function App() {
         console.log("Cena:", total);
     }
 
+    //Dla Kuby :D (żebyś mógł wyświetlić te dane na stronie)
+    const total = calculatePrice();
+    const needsLicense = boat?.includes("OMEGA");
+
   return (
     <>
         <div>
@@ -82,7 +86,7 @@ function App() {
             <p>Podaj Imię:</p>
             <input type={'text'} name={'clientName'} onChange={handleNameChange}/>
             <p>Wybierz swoją łódź:</p>
-            <select name={'boat'} defaultValue={"Kajak (20zł/h)"} onChange={handleBoatChange}>
+            <select name={'boat'} onChange={handleBoatChange}>
                 <option>Kajak (20zł/h)</option>
                 <option>Rower wodny (35zł/h)</option>
                 <option>OMEGA (150zł/h)</option>
