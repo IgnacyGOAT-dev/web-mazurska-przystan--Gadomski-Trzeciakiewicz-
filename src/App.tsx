@@ -38,7 +38,20 @@ function App() {
         setPayment(e.target.value);
     }
 
+    function calculatePrice(): number {
+        let boatPricePerHour = 0;
 
+        if (boat?.includes("Kajak")) boatPricePerHour = 20;
+        else if (boat?.includes("Rower")) boatPricePerHour = 35;
+        else if (boat?.includes("OMEGA")) boatPricePerHour = 150;
+
+        let total = boatPricePerHour * hour;
+
+        if (kapok) total += 5;
+        if (instructor) total += 50 * hour;
+
+        return total;
+    }
 
   return (
     <>
