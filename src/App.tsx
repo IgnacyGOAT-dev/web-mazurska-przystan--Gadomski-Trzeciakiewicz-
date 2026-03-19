@@ -53,14 +53,36 @@ function App() {
         return total;
     }
 
+    function handleSubmit(e: FormEvent<HTMLFormElement>) {
+        e.preventDefault();
+
+        if (!name.trim()) {
+            alert("Podaj imię");
+            return;
+        }
+
+        if (!boat) {
+            alert("Wybierz łódź");
+            return;
+        }
+
+        if (!payment) {
+            alert("Wybierz metodę płatności");
+            return;
+        }
+
+        const total = calculatePrice();
+        console.log("Cena:", total);
+    }
+
   return (
     <>
         <div>
-            <form>
+            <form onSubmit={handleSubmit}>
             <p>Podaj Imię:</p>
             <input type={'text'} name={'clientName'} onChange={handleNameChange}/>
             <p>Wybierz swoją łódź:</p>
-            <select name={'boat'} onChange={handleBoatChange}>
+            <select name={'boat'} defaultValue={"Kajak (20zł/h)"} onChange={handleBoatChange}>
                 <option>Kajak (20zł/h)</option>
                 <option>Rower wodny (35zł/h)</option>
                 <option>OMEGA (150zł/h)</option>
@@ -69,12 +91,12 @@ function App() {
             <p>{hour} godzin</p>
             <input type={'range'} max={8} min={1} defaultValue={hour} name={'leaseTime'} onChange={handleHourChange}/>
             <p/>
-            <input type={'checkbox'} name={'kapokCheck'}/> Kapok dla dziecka (5zł jednorazowo)
-            <input type={'checkbox'} name={'inCheck'}/> opieka instuktora (50zł za godzinę)
+            <input type={'checkbox'} name={'kapokCheck'} onChange={handleKapokChange}/> Kapok dla dziecka (5zł jednorazowo)
+            <input type={'checkbox'} name={'inCheck'} onChange={handleInstructorChange}/> opieka instuktora (50zł za godzinę)
             <br/>
             Wybierz płatność:
-            <input type={'radio'} name={'payment'} value={'card'}/> Karta
-            <input type={'radio'} name={'payment'} value={'blik'}/> Blik
+            <input type={'radio'} name={'payment'} value={'card'} onChange={handlePaymentChange}/> Karta
+            <input type={'radio'} name={'payment'} value={'blik'} onChange={handlePaymentChange}/> Blik
             <p/>
             <button type='submit' name={'submit'}>Sprzedaj nam swe życie</button>
             </form>
