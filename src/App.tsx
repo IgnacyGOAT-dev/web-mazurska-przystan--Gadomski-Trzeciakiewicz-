@@ -2,8 +2,8 @@ import './App.css'
 import {type ChangeEvent, type FormEvent, useState} from "react";
 
 function App() {
-    const [name, setName] = useState<string>("to jest default")
-    const [boat, setBoat] = useState<string>()
+    const [name, setName] = useState<string>()
+    const [boat, setBoat] = useState<string>("Kajak (20zł/h)")
     const [hour, setHour] = useState<number>(5)
     const [kapok, setKapok] = useState<boolean>(false)
     const [instructor, setInstructor] = useState<boolean>(false)
@@ -26,10 +26,63 @@ function App() {
         return e.currentTarget.value;
     }
 
+    function handleKapokChange(e: React.ChangeEvent<HTMLInputElement>) {
+        setKapok(e.target.checked);
+    }
+
+    function handleInstructorChange(e: React.ChangeEvent<HTMLInputElement>) {
+        setInstructor(e.target.checked);
+    }
+
+    function handlePaymentChange(e: React.ChangeEvent<HTMLInputElement>) {
+        setPayment(e.target.value);
+    }
+
+    function calculatePrice(): number {
+        let boatPricePerHour = 0;
+
+        if (boat?.includes("Kajak")) boatPricePerHour = 20;
+        else if (boat?.includes("Rower")) boatPricePerHour = 35;
+        else if (boat?.includes("OMEGA")) boatPricePerHour = 150;
+
+        let total = boatPricePerHour * hour;
+
+        if (kapok) total += 5;
+        if (instructor) total += 50 * hour;
+
+        return total;
+    }
+
+    function handleSubmit(e: FormEvent<HTMLFormElement>) {
+        e.preventDefault();
+
+        if (!name?.trim()) {
+            alert("Podaj imię");
+            return;
+        }
+
+        if (!boat) {
+            alert("Wybierz łódź");
+            return;
+        }
+
+        if (!payment) {
+            alert("Wybierz metodę płatności");
+            return;
+        }
+
+        const total = calculatePrice();
+        console.log("Cena:", total);
+    }
+
+    //Dla Kuby :D (żebyś mógł wyświetlić te dane na stronie)
+    const total = calculatePrice();
+    const needsLicense = boat?.includes("OMEGA");
+
   return (
     <>
         <div>
-            <form>
+            <form onSubmit={handleSubmit}>
             <p>Podaj Imię:</p>
             <input type={'text'} name={'clientName'} onChange={handleNameChange}/>
             <p>Wybierz swoją łódź:</p>
@@ -42,12 +95,12 @@ function App() {
             <p>{hour} godzin</p>
             <input type={'range'} max={8} min={1} defaultValue={hour} name={'leaseTime'} onChange={handleHourChange}/>
             <p/>
-            <input type={'checkbox'} name={'kapokCheck'}/> Kapok dla dziecka (5zł jednorazowo)
-            <input type={'checkbox'} name={'inCheck'}/> opieka instuktora (50zł za godzinę)
+            <input type={'checkbox'} name={'kapokCheck'} onChange={handleKapokChange}/> Kapok dla dziecka (5zł jednorazowo)
+            <input type={'checkbox'} name={'inCheck'} onChange={handleInstructorChange}/> opieka instuktora (50zł za godzinę)
             <br/>
             Wybierz płatność:
-            <input type={'radio'} name={'payment'} value={'card'}/> Karta
-            <input type={'radio'} name={'payment'} value={'blik'}/> Blik
+            <input type={'radio'} name={'payment'} value={'card'} onChange={handlePaymentChange}/> Karta
+            <input type={'radio'} name={'payment'} value={'blik'} onChange={handlePaymentChange}/> Blik
             <p/>
             <button type='submit' name={'submit'}>Sprzedaj nam swe życie</button>
             </form>
